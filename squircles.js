@@ -24,7 +24,7 @@ let ctx = canvas.getContext("2d");
 })();
 
 // rest of code
-let ballRadius = canvas.height/3; // size of ball relative to canvas height
+let ballRadius = Math.min(canvas.height, canvas.width)/3; // size of ball relative to canvas height
 let x = canvas.width/2; // start ball in middle of page
 let y = canvas.height/2; // start ball in middle of page
 let ballSpeed = 1;
