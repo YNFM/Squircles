@@ -99,7 +99,7 @@ function streakLost() {
         highestScore = score;
     }
     
-    ballRadius = canvas.height/3; // size of ball relative to canvas height
+    ballRadius = Math.min(canvas.height, canvas.width)/3; // size of ball relative to canvas height
     x = canvas.width/2; // start ball in middle of page
     y = canvas.height/2; // start ball in middle of page
     ballSpeed = 1;
