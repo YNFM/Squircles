@@ -150,3 +150,5 @@ function gameOver() {
 }
 
 // add additional balls, different colour
+
+// window.location.href = "http://stackoverflow.com";
