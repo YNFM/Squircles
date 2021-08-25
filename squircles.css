@@ -1,0 +1,16 @@
+html, body {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    width:  100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden; /*disable scrollbars*/
+    display:block
+  }
+
+canvas {
+    position:absolute;
+    left: 0px;
+    top: 0px;
+    border: 1px solid black;
+    background-color: #a6d8e7;
+}
