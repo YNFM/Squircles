@@ -48,10 +48,10 @@ function drawBall() {
 
 // write score
 function drawScore() {
-    ctx.font = "2vw Arial";
+    ctx.font = "2em Arial";
     ctx.fillStyle = "steelblue";
     ctx.fillText("Streak: "+score, 8, 40);
-    ctx.font = "2vw Arial";
+    ctx.font = "2em Arial";
     ctx.fillStyle = "steelblue";
     ctx.fillText("Longest Streak: "+highestScore, 8, canvas.height-40);
 } 
