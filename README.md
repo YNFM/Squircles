@@ -1,2 +1,2 @@
 # Squircles
- Children's game to improve their ability to use the mouse
+ This is a children's game, made to improve their ability to use a computer mouse
