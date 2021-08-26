@@ -23,7 +23,6 @@ let ctx = canvas.getContext("2d");
     }
 })();
 
-// rest of code
 let ballRadius = Math.min(canvas.height, canvas.width)/3; // size of ball relative to canvas height
 let x = canvas.width/2; // start ball in middle of page
 let y = canvas.height/2; // start ball in middle of page
@@ -37,6 +36,14 @@ let moveCircleAnimation;
 let highestScore = 0;
 // let playerAlive = true;
 
+function startingText() {
+    ctx.fillStyle = "paleturquoise";
+    ctx.font = "3em Arial";
+    ctx.textAlign="center"; 
+    ctx.textBaseline = "middle";
+    ctx.fillText("CLICK CIRCLE", (canvas.width/2), (canvas.height/2));
+}
+
 // draw ball
 function drawBall() {
     ctx.beginPath();
@@ -48,16 +55,17 @@ function drawBall() {
 
 // write score
 function drawScore() {
-    ctx.font = "2em Arial";
+    ctx.font = "3em Arial";
     ctx.fillStyle = "steelblue";
-    ctx.fillText("Streak: "+score, 8, 40);
-    ctx.font = "2em Arial";
+    ctx.fillText("Streak: "+score, 8, 45);
+    ctx.font = "3em Arial";
     ctx.fillStyle = "steelblue";
-    ctx.fillText("Longest Streak: "+highestScore, 8, canvas.height-40);
+    ctx.fillText("Longest Streak: "+highestScore, 8, canvas.height-20);
 } 
 
 drawBall();
 drawScore();
+startingText();
 
 // redraw circle in new location
 function moveCircle() {
@@ -110,6 +118,7 @@ function streakLost() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawBall();
     drawScore();
+    startingText();
 }
 
 // click listener, add point if correct, etc
@@ -130,7 +139,7 @@ canvas.addEventListener('click', function(event) {
     }
 }, false); 
 
-function gameOver() {
+/* function gameOver() {
     
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.beginPath();
@@ -147,7 +156,7 @@ function gameOver() {
     ctx.textAlign="center"; 
     ctx.textBaseline = "middle";
     ctx.fillText("GAME OVER", (canvas.width/2), (canvas.height/2));
-}
+} */
 
 // add additional balls, different colour
 

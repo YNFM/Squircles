@@ -1,5 +1,5 @@
 html, body {
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    /* font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; */
     width:  100%;
     height: 100%;
     margin: 0;
@@ -12,5 +12,5 @@ canvas {
     left: 0px;
     top: 0px;
     border: 1px solid black;
-    background-color: #a6d8e7;
+    background-color: paleturquoise;
 }
