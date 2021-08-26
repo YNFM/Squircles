@@ -58,10 +58,12 @@ function drawScore() {
     ctx.font = "3em Arial";
     ctx.fillStyle = "steelblue";
     ctx.textBaseline = "top";
+    ctx.textAlign = "left";
     ctx.fillText("Streak: "+score, 8, 8);
     ctx.font = "3em Arial";
     ctx.fillStyle = "steelblue";
     ctx.textBaseline = "bottom";
+    ctx.textAlign = "left";
     ctx.fillText("Longest Streak: "+highestScore, 8, canvas.height-8);
 } 
 
