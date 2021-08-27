@@ -52,12 +52,14 @@ function addPlayerLevel() {
 LEVEL ONE: CLICK ANYWHERE ON THE SCREEN
 ========================== */
 
+// replace the text with a mouse click symbol and add audio explanation
+
 function playLevelOne() {
     function startingText() {
         ctx.fillStyle = "steelblue";
         ctx.font = "6em Arial";
         ctx.textAlign="center"; 
-        ctx.textBaseline = "bottom";
+        ctx.textBaseline = "middle";
         ctx.fillText("CLICK ANYWHERE", (canvas.width/2), (canvas.height/2));
     }
 
@@ -78,6 +80,8 @@ function playLevelOne() {
 /* =========================
 LEVEL TWO: CLICK A BALL
 ========================== */  
+
+// add audio explanation
 
 function playLevelTwo() {
     let ballRadius = Math.min(canvas.height, canvas.width)/3; // size of ball relative to canvas height
@@ -133,6 +137,8 @@ function playLevelTwo() {
 /* =========================
 LEVEL THREE: CLICK A MOVING BALL 10 TIMES
 ========================== */
+
+// add audio explanation
 
 function playLevelThree() {
     let ballRadius = Math.min(canvas.height, canvas.width)/3; // size of ball relative to canvas height
@@ -273,12 +279,14 @@ function playLevelThree() {
 LEVEL FOUR: CLICK THE BLUE BALL
 ========================== */
 
+// add audio explanation and add different colour balls
+
 function playLevelFour() {
     function startingText() {
         ctx.fillStyle = "steelblue";
         ctx.font = "6em Arial";
         ctx.textAlign="center"; 
-        ctx.textBaseline = "bottom";
+        ctx.textBaseline = "middle";
         ctx.fillText("LEVEL COMING SOON", (canvas.width/2), (canvas.height/2));
     }
 
@@ -286,18 +294,32 @@ function playLevelFour() {
 }
 
 /* =========================
-LEVEL FIVE: DRAG A BALL
+LEVEL FIVE: CLICK AND DRAG A BALL
 ========================== */
+
+// add audio explanation
 
 function playLevelFive() {
     
 }
 
 /* =========================
-LEVEL SIX: DRAG A BALL INTO A HOLE
+LEVEL SIX: DRAG THREE MICE INTO THE HOLE
 ========================== */
 
+// add audio explanation
+
 function playLevelSix() {
+    
+}
+
+/* =========================
+LEVEL SEVEN: DOUBLE CLICK
+========================== */
+
+// add audio explanation
+
+function playLevelFive() {
     
 }
 
