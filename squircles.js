@@ -117,7 +117,7 @@ function playLevelOne() {
     startingText();
 
     function LevelOneExplanation() {
-        let LevelOneExplanationAudio = new Audio('/assets/audio/expl01_click_anywhere.m4a');
+        let LevelOneExplanationAudio = new Audio('/assets/audio/expl01.m4a');
         LevelOneExplanationAudio.play();
     }
 
@@ -169,7 +169,7 @@ function playLevelTwo() {
     }
 
     function LevelTwoExplanation() {
-        let LevelTwoExplanationAudio = new Audio('/assets/audio/exp02_click_circle.m4a');
+        let LevelTwoExplanationAudio = new Audio('/assets/audio/expl02.m4a');
         LevelTwoExplanationAudio.play();
     }
 
@@ -259,7 +259,7 @@ function playLevelThree() {
     startingText();
 
     function LevelThreeExplanation() {
-        let LevelThreeExplanationAudio = new Audio('/assets/audio/expl03click_circle_10_times.m4a');
+        let LevelThreeExplanationAudio = new Audio('/assets/audio/expl03.m4a');
         LevelThreeExplanationAudio.play();
     }
 
