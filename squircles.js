@@ -31,6 +31,7 @@ GAME FRAMEWORK
 ========================== */
 
 let playerLevel = 1;
+let playSound = true;
 
 function drawPlayerLevel() {
     ctx.font = "3em Arial";
@@ -45,8 +46,58 @@ function addPlayerLevel() {
     playerLevel++;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawPlayerLevel();
+    // drawSound();
     playGameLevel();
 }
+
+/* function soundControlOn(){  
+    let imgSoundOn = new Image();
+    imgSoundOn.src = '/assets/images/sound-on.svg';
+    imgSoundOn.onload = function(){
+        ctx.drawImage(imgSoundOn,canvas.width-58,canvas.height-58,50,50);
+    }
+}
+
+function soundControlOff(){  
+    let imgSoundOff = new Image();
+    imgSoundOff.src = '/assets/images/sound-off.svg';
+    imgSoundOff.onload = function(){
+        ctx.drawImage(imgSoundOff,canvas.width-58,canvas.height-58,50,50);
+    }
+}
+
+function drawSound(){
+    if(playSound===true){
+        soundControlOn();
+    } else {
+        soundControlOff();
+    }
+}
+drawSound();
+
+function switchSound() {
+    if(playSound===true){
+        playSound=false;
+    } else {
+        playSound=true;
+    }
+    
+    ctx.clearRect(canvas.width-58,canvas.height-58,50,50)
+    drawSound();
+}
+
+canvas.addEventListener('click', function (event) {
+    let elemLeft = canvas.offsetLeft;
+    let elemTop = canvas.offsetTop; 
+    let xClick = event.pageX - elemLeft;
+    let yClick = event.pageY - elemTop;
+
+    // console.log("CLICKED: (xClick,yClick) ", xClick, yClick);
+
+    if ( (xClick > canvas.width-58 && xClick < canvas.width) && (yClick > canvas.height-58 && yClick < canvas.height) ) { 
+        switchSound();
+    }
+}, false);  */
 
 /* =========================
 LEVEL ONE: CLICK ANYWHERE ON THE SCREEN
@@ -64,6 +115,15 @@ function playLevelOne() {
     }
 
     startingText();
+
+    function LevelOneExplanation() {
+        let LevelOneExplanationAudio = new Audio('/assets/audio/expl01_click_anywhere.m4a');
+        LevelOneExplanationAudio.play();
+    }
+
+    if (playSound) {
+        LevelOneExplanation();
+    }
 
     canvas.addEventListener('click', clickedAnywhereOn, false); 
 
@@ -108,8 +168,16 @@ function playLevelTwo() {
         ctx.fillText("CLICK ME", (canvas.width/2), (canvas.height/2));
     }
 
+    function LevelTwoExplanation() {
+        let LevelTwoExplanationAudio = new Audio('/assets/audio/exp02_click_circle.m4a');
+        LevelTwoExplanationAudio.play();
+    }
+
     drawBall();
     startingText();
+    if (playSound) {
+        LevelTwoExplanation();
+    }
 
     // click listener, add point if correct, etc
 
@@ -189,6 +257,15 @@ function playLevelThree() {
     drawBall();
     drawScore();
     startingText();
+
+    function LevelThreeExplanation() {
+        let LevelThreeExplanationAudio = new Audio('/assets/audio/expl03click_circle_10_times.m4a');
+        LevelThreeExplanationAudio.play();
+    }
+
+    if (playSound) {
+        LevelThreeExplanation();
+    }
 
     // redraw circle in new location
     function moveCircle() {
