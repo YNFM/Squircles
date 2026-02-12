@@ -774,33 +774,33 @@ class LevelNine extends Level {
     }
 
     handleMouseUp(x, y) {
-
-        if (b.isDragging) {
-            b.isDragging = false;
-            // Check collision with correct bin 
-            let dropped = false;
-            this.bins.forEach(bin => {
-                if (x > bin.x && x < bin.x + bin.w && y > bin.y && y < bin.y + bin.h) {
-                    if (bin.color === b.color) {
-                        b.sorted = true;
-                        dropped = true;
-                        this.game.playSuccessSound();
+        this.balls.forEach(b => {
+            if (b.isDragging) {
+                b.isDragging = false;
+                // Check collision with correct bin 
+                let dropped = false;
+                this.bins.forEach(bin => {
+                    if (x > bin.x && x < bin.x + bin.w && y > bin.y && y < bin.y + bin.h) {
+                        if (bin.color === b.color) {
+                            b.sorted = true;
+                            dropped = true;
+                            this.game.playSuccessSound();
+                        }
                     }
+                });
+
+                if (!dropped) {
+                    b.x = b.originalX;
+                    b.y = b.originalY;
+                    this.game.playTone(200, 'sawtooth', 0.2);
                 }
-            });
-
-            if (!dropped) {
-                b.x = b.originalX;
-                b.y = b.originalY;
-                this.game.playTone(200, 'sawtooth', 0.2);
             }
-        }
-    });
+        });
 
-    if(this.balls.every(b => b.sorted)) {
-    this.game.nextLevel();
-} 
-    } 
+        if (this.balls.every(b => b.sorted)) {
+            this.game.nextLevel();
+        }
+    }
 }
 
 // Level 10: Trace Path 
@@ -1204,198 +1204,8 @@ class LevelFifteen extends Level {
     }
 }
 
-// Level 13: Reaction Time 
-class LevelThirteen extends Level {
-    constructor(game) {
-        super(game);
-        this.state = 'WAIT'; // WAIT, READY, GO 
-        this.message = 'WAIT...';
-        this.color = '#ff7675';
-        this.startTime = 0;
-        this.timeoutId = null;
 
-        this.startSequence();
-    }
-
-    startSequence() {
-        this.state = 'WAIT';
-        this.message = 'WAIT...';
-        this.color = '#ff7675'; // Red 
-
-        this.timeoutId = setTimeout(() => {
-            this.state = 'READY';
-            this.message = 'READY...';
-            this.color = '#fdcb6e'; // Yellow 
-            this.game.playTone(400, 'square', 0.1);
-
-            this.timeoutId = setTimeout(() => {
-                this.state = 'GO';
-                this.message = 'CLICK NOW!';
-                this.color = '#00b894'; // Green 
-                this.startTime = performance.now();
-                this.game.playTone(800, 'square', 0.2);
-            }, Math.random() * 2000 + 1000); // 1-3s 
-        }, 2000);
-    }
-
-    draw(ctx) {
-        ctx.fillStyle = this.color;
-        ctx.fillRect(0, 0, this.width, this.height);
-
-        ctx.fillStyle = 'white';
-        ctx.font = 'bold 80px Arial';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText(this.message, this.width / 2, this.height / 2);
-    }
-
-    handleClick(x, y) {
-        if (this.state === 'GO') {
-            const reactionTime = performance.now() - this.startTime;
-            // Any reaction under 1s is good for a mouse game 
-            this.game.nextLevel();
-        } else {
-            // False start 
-            clearTimeout(this.timeoutId);
-            this.message = 'TOO EARLY!';
-            this.game.playTone(150, 'sawtooth', 0.5);
-            setTimeout(() => this.startSequence(), 1000);
-        }
-    }
-}
-
-// Level 14: Scroll Wheel 
-class LevelFourteen extends Level {
-    constructor(game) {
-        super(game);
-        this.balloonRadius = 50;
-        this.targetRadius = 200;
-        this.tolerance = 20;
-    }
-
-    draw(ctx) {
-        // Target Outline 
-        ctx.beginPath();
-        ctx.arc(this.width / 2, this.height / 2, this.targetRadius, 0, Math.PI * 2);
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
-        ctx.lineWidth = 10;
-        ctx.stroke();
-
-        ctx.setLineDash([10, 10]);
-        ctx.stroke();
-        ctx.setLineDash([]);
-
-        // Balloon 
-        ctx.beginPath();
-        ctx.arc(this.width / 2, this.height / 2, this.balloonRadius, 0, Math.PI * 2);
-        ctx.fillStyle = '#ff7675';
-        ctx.fill();
-
-        // Instruction 
-        ctx.fillStyle = '#333';
-        ctx.font = 'bold 30px Arial';
-        ctx.textAlign = 'center';
-        ctx.fillText('SCROLL UP to Inflate to the Dotted Line', this.width / 2, 100);
-
-        // Check win 
-        if (Math.abs(this.balloonRadius - this.targetRadius) < this.tolerance) {
-            ctx.fillStyle = '#00b894';
-            ctx.fillText('CLICK TO POP!', this.width / 2, this.height - 100);
-        }
-    }
-
-    handleWheel(deltaY) {
-        if (deltaY < 0) {
-            this.balloonRadius += 5; // Scroll Up 
-        } else {
-            this.balloonRadius = Math.max(10, this.balloonRadius - 5); // Scroll Down 
-        }
-    }
-
-    handleClick(x, y) {
-        if (Math.abs(this.balloonRadius - this.targetRadius) < this.tolerance) {
-            // Pop effect 
-            this.game.spawnParticles(this.width / 2, this.height / 2, '#ff7675');
-            this.game.nextLevel();
-        }
-    }
-}
-
-// Level 15: Precision Maze 
-class LevelFifteen extends Level {
-    constructor(game) {
-        super(game);
-        this.pathRadius = 30; // Narrow! 
-        this.points = [];
-        this.generatePath();
-        this.inPath = false;
-    }
-
-    generatePath() {
-        let x = 50;
-        let y = this.height / 2;
-        this.points.push({ x, y });
-
-        // Zig Zag 
-        while (x < this.width - 50) {
-            x += 50;
-            y = this.height / 2 + Math.sin(x / 100) * 200;
-            this.points.push({ x, y });
-        }
-    }
-
-    draw(ctx) {
-        // Draw Path 
-        ctx.beginPath();
-        ctx.moveTo(this.points[0].x, this.points[0].y);
-        this.points.forEach(p => ctx.lineTo(p.x, p.y));
-        ctx.lineCap = 'round';
-        ctx.lineJoin = 'round';
-        ctx.lineWidth = this.pathRadius * 2;
-        ctx.strokeStyle = '#dfe6e9';
-        ctx.stroke();
-
-        // Start 
-        ctx.beginPath();
-        ctx.arc(this.points[0].x, this.points[0].y, this.pathRadius, 0, Math.PI * 2);
-        ctx.fillStyle = '#badc58';
-        ctx.fill();
-        ctx.fillStyle = 'black';
-        ctx.font = '16px Arial';
-        ctx.fillText('START', this.points[0].x, this.points[0].y);
-
-        // End 
-        const last = this.points[this.points.length - 1];
-        ctx.beginPath();
-        ctx.arc(last.x, last.y, this.pathRadius, 0, Math.PI * 2);
-        ctx.fillStyle = '#ffbe76';
-        ctx.fill();
-        ctx.fillText('FINISH', last.x, last.y);
-
-        // Instruction 
-        ctx.fillStyle = '#333';
-        ctx.font = 'bold 30px Arial';
-        ctx.textAlign = 'center';
-        ctx.fillText('Precise Mouse Movement', this.width / 2, 50);
-    }
-
-    handleMouseMove(x, y) {
-        // Check distance to any segment 
-        let onTrack = false;
-
-        const idealY = this.height / 2 + Math.sin(x / 100) * 200;
-
-        if (Math.abs(y - idealY) < this.pathRadius) {
-            onTrack = true;
-        }
-
-        if (onTrack) {
-            if (x > this.width - 100) {
-                this.game.nextLevel(); // Win 
-            }
-        } else {
-            // Reset 
-            this.game.playTone(150, 'sawtooth', 0.2);
-        }
-    }
-} 
+// Initialize Game 
+window.onload = () => {
+    const game = new Game('myCanvas-el');
+}; 
